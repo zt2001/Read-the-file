@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.195
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "文件读写", "文件读写\文件读写.csproj", "{404F4205-82C9-4E95-984C-0B0D9ABC6AD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{404F4205-82C9-4E95-984C-0B0D9ABC6AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{404F4205-82C9-4E95-984C-0B0D9ABC6AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{404F4205-82C9-4E95-984C-0B0D9ABC6AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{404F4205-82C9-4E95-984C-0B0D9ABC6AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F10668C3-0950-4C97-AFC2-DD0A873B0DC4}
+	EndGlobalSection
+EndGlobal
