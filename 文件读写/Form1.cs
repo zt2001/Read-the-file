@@ -16,5 +16,10 @@ namespace 文件读写
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show("我去");
+        }
     }
 }
