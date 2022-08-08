@@ -26,7 +26,6 @@ namespace 文件读写
             comboBox1.Text = "json";
             Judge_path();
         }
-        string write_data;
         private void Form1_Load(object sender, EventArgs e)
         {
             read();
@@ -121,7 +120,7 @@ namespace 文件读写
                 per.Age = a3;
                 per.Height = a4;
                 per.Weight = a5;
-                write_data = JsonConvert.SerializeObject(per);//序列化
+                string write_data = JsonConvert.SerializeObject(per);//序列化
                 File.AppendAllText("./data/data.json", write_data);
                 File.WriteAllText("./data/data.json", write_data, System.Text.Encoding.UTF8);
 
