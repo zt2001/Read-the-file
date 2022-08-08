@@ -24,10 +24,7 @@ namespace 文件读写
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             comboBox1.Text = "json";
-            Judge_path(1);
-            Judge_path(2);
-            Judge_path(3);
-            Judge_path(4);
+            Judge_path();
         }
         string write_data;
         private void Form1_Load(object sender, EventArgs e)
@@ -61,54 +58,36 @@ namespace 文件读写
             textBox6.Text = "";
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void Judge_path()
         {
-
-        }
-
-        private void Judge_path(int mod)
-        {
-            if (mod == 1)
+            if (!Directory.Exists("./data"))
             {
-
-                if (!Directory.Exists("./data"))
-                {
                     //创建文件夹
-                    try
-                    {
-                        Directory.CreateDirectory("./data");
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            }
-            //判断文件是否存在
-            if (mod == 2)
-            {
-                if (!File.Exists(@"./data/data.json"))
+            try
+               {
+                    Directory.CreateDirectory("./data");
+               }
+            catch (Exception)
                 {
-                    //默认数据
-                    write_in("json","json", "男", "18", "175", "55");
-                }
-                
-            }
-            if (mod == 3)
-            {
-                if (!File.Exists(@"./data/data.ini"))
-                {
-                    //默认数据
-                    write_in("ini","ini", "女", "20", "175", "55");
                 }
             }
-            if (mod == 4)
-            {
-                if (!File.Exists(@"./data/data.xml"))
-                    {
-                   
-                    write_in("xml","xml", "男", "18", "175", "55");
 
-                }
+            if (!File.Exists(@"./data/data.json"))
+            {
+                    //默认数据
+                write_in("json","json", "男", "18", "175", "55");
+            }
+                
+            if (!File.Exists(@"./data/data.ini"))
+            {
+                    //默认数据
+                write_in("ini","ini", "女", "20", "175", "55");
+            }
+            if (!File.Exists(@"./data/data.xml"))
+            {
+                   
+                write_in("xml","xml", "男", "18", "175", "55");
+
             }
 
         }
@@ -130,21 +109,6 @@ namespace 文件读写
                 //MessageBox.Show("xml");
                 textBox1.Text = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "data\\data.xml";
             }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click_1(object sender, EventArgs e)
-        {
-
         }
         //写数据
         private void write_in(string leixinb , string a1, string a2, string a3, string a4, string a5)

@@ -182,7 +182,6 @@ namespace 文件读写
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 38;
             this.label3.Text = "性别";
-            this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
             // textBox3
             // 
