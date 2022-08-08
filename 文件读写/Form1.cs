@@ -31,6 +31,32 @@ namespace 文件读写
             Judge_path(1, "./data/data.xml");
 
         }
+        //读取按钮
+        private void button1_Click(object sender, EventArgs e)
+        {
+            read();
+        }
+        //写入按钮
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "" || textBox6.Text == "")
+            {
+                MessageBox.Show("请将数据填写完整");
+            }
+            else
+            {
+                write_in();
+            }
+        }
+        //重置按钮
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -90,27 +116,11 @@ namespace 文件读写
             {
                 // MessageBox.Show("ini");
                 textBox1.Text = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "data\\data.ini";
-
-
             }
             else if (comboBox1.Text == "xml")
             {
                 //MessageBox.Show("xml");
                 textBox1.Text = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "data\\data.xml";
-
-
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "" || textBox6.Text == "")
-            {
-                MessageBox.Show("请将数据填写完整");
-            }
-            else
-            {
-                write_in();
             }
         }
 
@@ -128,6 +138,7 @@ namespace 文件读写
         {
 
         }
+        //写数据
         private void write_in()
         {
             if (comboBox1.Text=="json")
@@ -150,6 +161,7 @@ namespace 文件读写
 
             }
         }
+        //读数据
         private void read()
         {
             if (comboBox1.Text == "json")
@@ -170,20 +182,6 @@ namespace 文件读写
             {
 
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            read();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            textBox2.Text = "";
-            textBox3.Text = "";
-            textBox4.Text = "";
-            textBox5.Text = "";
-            textBox6.Text = "";
         }
     }
     public class Person
