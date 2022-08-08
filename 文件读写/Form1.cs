@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace 文件读写
 {
@@ -21,21 +24,15 @@ namespace 文件读写
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             comboBox1.Text = "json";
-            
-
+            Judge_path(1);
+            Judge_path(2);
+            Judge_path(3);
+            Judge_path(4);
         }
+        string write_data;
         private void Form1_Load(object sender, EventArgs e)
         {
-            Judge_path(1,"./data");
-            Judge_path(2,"./data/data.json");
-            Judge_path(2,"./data/data.ini");
-            Judge_path(2,"./data/data.xml");
             read();
-
-            //Judge_path(1, "./data/data.json");
-            // Judge_path(1, "./data/data.ini");
-            //Judge_path(1, "./data/data.xml");
-
         }
         //读取按钮
         private void button1_Click(object sender, EventArgs e)
@@ -51,7 +48,7 @@ namespace 文件读写
             }
             else
             {
-                write_in(textBox2.Text ,textBox3.Text,textBox4.Text,textBox5.Text,textBox6.Text);
+                write_in(comboBox1.Text,textBox2.Text ,textBox3.Text,textBox4.Text,textBox5.Text,textBox6.Text);
             }
         }
         //重置按钮
@@ -69,41 +66,51 @@ namespace 文件读写
 
         }
 
-        private void Judge_path(int mod ,string path)
+        private void Judge_path(int mod)
         {
             if (mod == 1)
             {
 
-                if (!Directory.Exists(path))
+                if (!Directory.Exists("./data"))
                 {
                     //创建文件夹
                     try
                     {
-                        Directory.CreateDirectory(path);
+                        Directory.CreateDirectory("./data");
                     }
                     catch (Exception)
                     {
                     }
                 }
             }
-            //string path = "c:/test/1.txt"
             //判断文件是否存在
             if (mod == 2)
             {
-                if (!File.Exists(path))
+                if (!File.Exists(@"./data/data.json"))
                 {
-                    //创建文件
-                    try
+                    //默认数据
+                    write_in("json","json", "男", "18", "175", "55");
+                }
+                
+            }
+            if (mod == 3)
+            {
+                if (!File.Exists(@"./data/data.ini"))
+                {
+                    //默认数据
+                    write_in("ini","ini", "女", "20", "175", "55");
+                }
+            }
+            if (mod == 4)
+            {
+                if (!File.Exists(@"./data/data.xml"))
                     {
-                        File.Create(path);
-
-                    }
-                    catch (Exception)
-                    {
-                    }
+                   
+                    write_in("xml","xml", "男", "18", "175", "55");
 
                 }
             }
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -140,9 +147,9 @@ namespace 文件读写
 
         }
         //写数据
-        private void write_in(string a1, string a2, string a3, string a4, string a5)
+        private void write_in(string leixinb , string a1, string a2, string a3, string a4, string a5)
         {
-            if (comboBox1.Text=="json")
+            if (leixinb == "json")
             {
                 Person per = new Person();
                 per.Name = a1;
@@ -150,21 +157,32 @@ namespace 文件读写
                 per.Age = a3;
                 per.Height = a4;
                 per.Weight = a5;
-                string write_data = JsonConvert.SerializeObject(per);//序列化
+                write_data = JsonConvert.SerializeObject(per);//序列化
+                File.AppendAllText("./data/data.json", write_data);
                 File.WriteAllText("./data/data.json", write_data, System.Text.Encoding.UTF8);
 
             }
-            else if (comboBox1.Text == "ini")
+            else if (leixinb == "ini")
             {
-                INIWrite("名","姓名",a1,textBox1.Text);
-                INIWrite("名", "性别", a2, textBox1.Text);
-                INIWrite("名", "年龄", a3, textBox1.Text);
-                INIWrite("名", "身高", a4, textBox1.Text);
-                INIWrite("名", "体重", a5, textBox1.Text);
+                INIWrite("名","姓名",a1, "./data/data.ini");
+                INIWrite("名", "性别", a2, "./data/data.ini");
+                INIWrite("名", "年龄", a3, "./data/data.ini");
+                INIWrite("名", "身高", a4, "./data/data.ini");
+                INIWrite("名", "体重", a5, "./data/data.ini");
             }
-            else if (comboBox1.Text == "xml")
+            else if (leixinb == "xml")
             {
-                MessageBox.Show("未完待续");
+                var doc = new XDocument(new XElement("Contacts",
+                    new XElement("Contact",
+                    new XElement("Name", a1),
+                    new XElement("Sex", a2),
+                    new XElement("Age", a3),
+                    new XElement("Height", a4),
+                    new XElement("Weight", a5)
+                        )
+                    )
+                );
+                doc.Save("./data/data.xml");
             }
         }
         //读数据
@@ -184,7 +202,7 @@ namespace 文件读写
             {
                 if(File.ReadAllText("./data/data.ini") == "")
                 {
-                    write_in("test","女","18","175","55");
+                    write_in("ini","test","女","18","175","55");
                 }
                 textBox2.Text = INIRead("名", "姓名",textBox1.Text);
                 textBox3.Text = INIRead("名", "性别",textBox1.Text);
@@ -195,7 +213,14 @@ namespace 文件读写
             }
             else if (comboBox1.Text == "xml")
             {
-                MessageBox.Show("未完待续");
+                DataSet ds = new DataSet();
+                ds.ReadXml("./data/data.xml");
+                //读取第一条数据的节点
+                textBox2.Text = ds.Tables[0].Rows[0]["Name"].ToString();
+                textBox3.Text = ds.Tables[0].Rows[0]["Sex"].ToString();
+                textBox4.Text = ds.Tables[0].Rows[0]["Age"].ToString();
+                textBox5.Text = ds.Tables[0].Rows[0]["Height"].ToString();
+                textBox6.Text = ds.Tables[0].Rows[0]["Weight"].ToString();
             }
         }
         [DllImport("kernel32.dll")]
@@ -223,11 +248,6 @@ namespace 文件读写
 
         private string GetJsonFile(string filepath)
         {
-            if (File.ReadAllText("./data/data." + comboBox1.Text)=="")
-            {
-                write_in("test", "男", "18", "175", "55");
-
-            }
             string json = string.Empty;
             using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
             {
